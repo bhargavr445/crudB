@@ -5,4 +5,7 @@
         <a  class="w3-bar-item w3-button">Link 1</a>
         <a  class="w3-bar-item w3-button">Link 2</a>
         <a  class="w3-bar-item w3-button">Link 3</a>
+        <button *ngIf = "loginStatus" (click)="logout()"> Logout </button>
+        <p *ngIf = "userName"> {{ userName }} </p>
       </div>
+    

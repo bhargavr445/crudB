@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-//import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { BehaviorSubject } from 'rxjs';
-//import {HttpBackendClientService} from './HttpConfig/httpbackend-client'; //
+import { AppState } from '../main-store';
+import { EMPLOYEE_LIST } from '../action';
+import { NgRedux } from '@angular-redux/store';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +11,21 @@ import { BehaviorSubject } from 'rxjs';
 export class EmployeeServiceService {
  data: any;
 
-  private product = new BehaviorSubject<Array<any>>([]);
+  // private product = new BehaviorSubject<Array<any>>([]);
 
-   productData = this.product.asObservable();
-  //testVariable: Array<any>;
-  
-  constructor(private http: HttpClient) { }
-  read(){
+  //  productData = this.product.asObservable();
+  constructor(private http: HttpClient, private ngRedux: NgRedux <AppState>) { }
+  read() {
     return this.http.get('http://localhost:2000/api/getAllProducts');
   }
-  getProducts(data){
-    
-    let params = paramsStringify(data);
-    let filterUrl ='http://localhost:2000/api/getAllProducts'+params;
+  getProducts(data) {
+    const params = paramsStringify(data);
+    const filterUrl = 'http://localhost:2000/api/getAllProducts' + params;
     this.http.get(filterUrl).subscribe((data) => {
-     this.updateProducts(data);
+      this.data = data;
+      this.ngRedux.dispatch({type: EMPLOYEE_LIST, value: this.data.data});
+
+     //this.updateProducts(data);
     }
 
     );
@@ -32,9 +33,9 @@ export class EmployeeServiceService {
   //  return this.http.get('http://localhost:2000/api/getAllProducts');
   }
 
-  updateProducts(data){
-    this.product.next(data);  
-}
+//   updateProducts(data) {
+//     this.product.next(data);
+// }
 }
 // export function   paramsStringify(filterObj: any) :string{
 
@@ -63,8 +64,7 @@ export class EmployeeServiceService {
        
 //        finalParams = (finalParams == "?" ? finalParams : finalParams + "&") + "stateCode" + "=" + params[k]['num'];
 //      }
-//      else  if (k === 'fedStdTxtId') {
-       
+//      else  if (k === 'fedStdTxtId') {  
 //       finalParams = (finalParams == "?" ? finalParams : finalParams + "&") + "fedStdRefNum" + "=" + encodeURIComponent(params[k].toString());
 //     } else if (k=== 'stateStdId'){
 //       finalParams = (finalParams == "?" ? finalParams : finalParams + "&") + "stateStdRefNum" + "=" + encodeURIComponent(params[k].toString());
@@ -86,24 +86,23 @@ export class EmployeeServiceService {
 //  }
 
 export function paramsStringify(filterObj: any): string {
-  let finalParams: string = '';
+  let finalParams = '';
   let params = {};
   let keys = Object.keys(filterObj);
-  //console.log('checking keys',keys);
   keys.map(k => {
    // console.log(filterObj[k]);
     if (filterObj[k]) {
       params = {
         ...params,
         [k]: filterObj[k]
-      }
+      };
 
     }
-  })
-  finalParams = "?";
+  } );
+  finalParams = '?';
   keys = Object.keys(params);
   keys.map(k => {
-    finalParams = (finalParams == "?" ? finalParams : finalParams + "&") + k + "=" + params[k].toString();
-  })
+    finalParams = (finalParams === '?' ? finalParams : finalParams + '&') + k + '=' + params[k].toString();
+  });
   return finalParams;
-}
+  }

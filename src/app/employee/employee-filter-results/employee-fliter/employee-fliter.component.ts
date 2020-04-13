@@ -8,14 +8,13 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./employee-fliter.component.css']
 })
 export class EmployeeFliterComponent implements OnInit {
-  data:any;
+  data: any;
   newForm: FormGroup;
   constructor(private fb: FormBuilder,
               private service: EmployeeServiceService) { }
 
   ngOnInit() {
     this.createForm();
-    
   }
 
   createForm() {
