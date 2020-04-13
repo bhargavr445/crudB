@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -16,6 +15,7 @@ import { INITIAL_STATE, rootReducer } from './main-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { environment } from '../environments/environment';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -34,6 +34,7 @@ import { environment } from '../environments/environment';
     ReactiveFormsModule,
     NgReduxModule,
     RouterModule,
+    CommonModule,
     StoreModule.forRoot({rootReducer}),
     !environment.production ? StoreDevtoolsModule.instrument() : []
 

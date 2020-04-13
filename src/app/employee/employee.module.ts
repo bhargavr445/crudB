@@ -7,6 +7,7 @@ import { EmployeeDataComponent } from '../employee/employee-filter-results/emplo
 import { EmployeeFliterComponent } from '../employee/employee-filter-results/employee-fliter/employee-fliter.component';
 import { EmployeeFilterResultsComponent } from '../employee/employee-filter-results/employee-filter-results.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [
     EmployeeRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // BrowserModule,
   ]
 })
 export class EmployeeModule { }

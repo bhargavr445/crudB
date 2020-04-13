@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeServiceService } from '../../../employee/employee-service.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { AppState } from '../../../main-store';
+import { NgRedux } from '@angular-redux/store';
+import { LOADING } from 'src/app/action';
 
 @Component({
   selector: 'app-employee-fliter',
@@ -11,7 +14,8 @@ export class EmployeeFliterComponent implements OnInit {
   data: any;
   newForm: FormGroup;
   constructor(private fb: FormBuilder,
-              private service: EmployeeServiceService) { }
+              private service: EmployeeServiceService,
+              private ngRedux: NgRedux <AppState>) { }
 
   ngOnInit() {
     this.createForm();
@@ -25,8 +29,9 @@ export class EmployeeFliterComponent implements OnInit {
   }
 
   filterProducts() {
-    console.log(this.newForm.getRawValue());
-    this.service.getProducts(this.newForm.getRawValue());
+     this.ngRedux.dispatch({type: LOADING, data: true});
+     console.log(this.newForm.getRawValue());
+     this.service.getProducts(this.newForm.getRawValue());
   }
 }
 

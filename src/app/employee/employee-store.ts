@@ -13,10 +13,11 @@ export const EMPLOYEE_INITIAL_STATE: EmployeeAppState = {
 
 
 function updateEmployeeList(state: EmployeeAppState, action) {
+    // tslint:disable-next-line:no-debugger
+    // debugger;
     const newState = state;
-    //console.log(action.value);
-    newState.employeeList = action.value;
-    //console.log( newState.employeeList);
+    newState.employeeList = action.data;
+    console.log( newState.employeeList);
     return tassign(state, newState);
 }
 

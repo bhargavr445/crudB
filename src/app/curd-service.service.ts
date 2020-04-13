@@ -9,9 +9,9 @@ import {HttpBackendClientService} from './HttpConfig/httpbackend-client'; //
 })
 export class CurdServiceService {
 
-  constructor(private http: HttpClient, 
-    private httpBackend: HttpBackendClientService) { }
-  getLoginResponse(loginCredentials){
-    return this.httpBackend.post('http://localhost:2000/api/el/login',loginCredentials);
+  constructor(private http: HttpClient,
+              private httpBackend: HttpBackendClientService) { }
+  getLoginResponse(loginCredentials) {
+    return this.httpBackend.post('http://localhost:2000/api/el/login', loginCredentials);
   }
 }

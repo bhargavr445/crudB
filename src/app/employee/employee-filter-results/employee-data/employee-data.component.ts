@@ -25,7 +25,7 @@ export class EmployeeDataComponent implements OnInit {
     }).subscribe(
       (result) => {
         this.employeeRed = result;
-        console.log(this.employeeRed);
+        // console.log(this.employeeRed);
       });
   }
   readOnly() {

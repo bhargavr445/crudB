@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { AppState } from '../main-store';
-import { EMPLOYEE_LIST } from '../action';
+import { EMPLOYEE_LIST, LOADING } from '../action';
 import { NgRedux } from '@angular-redux/store';
 
 @Injectable({
@@ -23,19 +23,17 @@ export class EmployeeServiceService {
     const filterUrl = 'http://localhost:2000/api/getAllProducts' + params;
     this.http.get(filterUrl).subscribe((data) => {
       this.data = data;
-      this.ngRedux.dispatch({type: EMPLOYEE_LIST, value: this.data.data});
-
-     //this.updateProducts(data);
+      this.ngRedux.dispatch({type: EMPLOYEE_LIST, data: this.data});
+      this.ngRedux.dispatch({type: LOADING, data: false});
+    }, err => {
+      this.ngRedux.dispatch({type: LOADING, data: false});
+      console.log('Error in Filtering products', err);
     }
 
     );
 
   //  return this.http.get('http://localhost:2000/api/getAllProducts');
   }
-
-//   updateProducts(data) {
-//     this.product.next(data);
-// }
 }
 // export function   paramsStringify(filterObj: any) :string{
 
