@@ -3,7 +3,9 @@ import { EmployeeServiceService } from '../../../employee/employee-service.servi
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AppState } from '../../../main-store';
 import { NgRedux } from '@angular-redux/store';
-import { LOADING } from 'src/app/action';
+import { LOADING, PRODUCT_FORM } from 'src/app/action';
+import { ProductFilterModel } from '../../../employee/model/ProductForm';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-fliter',
@@ -13,12 +15,25 @@ import { LOADING } from 'src/app/action';
 export class EmployeeFliterComponent implements OnInit {
   data: any;
   newForm: FormGroup;
+  formData: ProductFilterModel;
   constructor(private fb: FormBuilder,
               private service: EmployeeServiceService,
-              private ngRedux: NgRedux <AppState>) { }
+              private ngRedux: NgRedux <AppState>,
+              private router: Router) { }
 
   ngOnInit() {
     this.createForm();
+    this.ngRedux.select(state => {
+    return state.employee.productFormData;
+    }).subscribe(
+      (data) => {
+      this.formData = data;
+      if (this.formData) {
+       console.log('Form Data is not void');
+       this.patchValueIntoForm(this.formData);
+      }
+      }
+    );
   }
 
   createForm() {
@@ -31,7 +46,17 @@ export class EmployeeFliterComponent implements OnInit {
   filterProducts() {
      this.ngRedux.dispatch({type: LOADING, data: true});
      console.log(this.newForm.getRawValue());
+     this.ngRedux.dispatch({type: PRODUCT_FORM, data: this.newForm.getRawValue()});
      this.service.getProducts(this.newForm.getRawValue());
+  }
+  patchValueIntoForm(data: ProductFilterModel) {
+  this.newForm.patchValue({
+    name: data.name,
+    price: data.price,
+  });
+  }
+  createNewProduct() {
+  this.router.navigate(['employee/create']);
   }
 }
 

@@ -9,6 +9,7 @@ import { NgRedux } from '@angular-redux/store';
 })
 export class AppComponent implements OnInit {
   loading: boolean;
+  loggedIn: boolean;
   constructor(private ngRedux: NgRedux<AppState>) { }
   ngOnInit() {
   this.ngRedux.select(state => {
@@ -19,5 +20,13 @@ export class AppComponent implements OnInit {
     console.log(this.loading);
     }
   );
+
+  this.ngRedux.select(state => {
+      return state.home.loggedIn;
+    }).subscribe(
+      (data) => {
+        this.loggedIn = data;
+      }
+    );
   }
 }

@@ -11,7 +11,8 @@ import { Route, Router } from '@angular/router';
 export class HeaderComponent implements OnInit {
   userName: string;
   loginStatus: boolean;
-  constructor(private ngRedux: NgRedux<AppState>, private router: Router) { }
+  constructor(private ngRedux: NgRedux<AppState>,
+              private router: Router) { }
 
   ngOnInit() {
     this.ngRedux.select(state => {
@@ -34,4 +35,8 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.router.navigate(['login']);
   }
-}
+
+  gotTo() {
+    this.router.navigate(['employee']);
+  }
+ }

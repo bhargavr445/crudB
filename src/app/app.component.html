@@ -1,6 +1,10 @@
-<app-header></app-header>
+<div *ngIf="loggedIn">
+    <app-header></app-header>
+</div>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
+<div *ngIf="loggedIn">
+    <app-footer></app-footer>
+</div>
 <div class="comp-overlay" 
      role="img"
      *ngIf="loading"><img style="margin: 15% 40%; height: 10%"

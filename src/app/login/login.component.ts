@@ -1,32 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CurdServiceService } from '../curd-service.service';
 import { LOGIN_STATUS, USER_NAME, LOADING } from '../action';
 import { AppState } from '../main-store';
 import { NgRedux } from '@angular-redux/store';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   loginClicked: boolean;
   loggedIn: boolean;
+  private subscription = new  Subscription();
   constructor(private fb: FormBuilder, private router: Router,
               private service: CurdServiceService, private ngRedux: NgRedux<AppState>) { }
   loginResponse: any;
   ngOnInit() {
-    this.ngRedux.select(state => {
+    const sub1 = this.ngRedux.select(state => {
       return state.home.loggedIn;
     }).subscribe(
       (data) => {
-       this.loggedIn = data;
-       console.log(this.loggedIn);
+        this.loggedIn = data;
+        console.log(this.loggedIn);
       }
-    );
+      );
+    this.subscription.add(sub1);
     this.createLoginForm();
   }
     createLoginForm() {
@@ -61,5 +64,8 @@ export class LoginComponent implements OnInit {
       }
     );
     }
+  }
+  ngOnDestroy(): void {
+  this.subscription.unsubscribe();
   }
 }
