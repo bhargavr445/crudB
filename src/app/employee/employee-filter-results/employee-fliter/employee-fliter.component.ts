@@ -13,7 +13,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./employee-fliter.component.css']
 })
 export class EmployeeFliterComponent implements OnInit {
+  pArray: any;
   data: any;
+  filterprice: number;
   newForm: FormGroup;
   formData: ProductFilterModel;
   constructor(private fb: FormBuilder,
@@ -46,6 +48,10 @@ export class EmployeeFliterComponent implements OnInit {
   filterProducts() {
      this.ngRedux.dispatch({type: LOADING, data: true});
      console.log(this.newForm.getRawValue());
+    //  this.filterprice = this.newForm.getRawValue().price;
+    //  sessionStorage.setItem('price', this.newForm.getRawValue().price);
+    //  const priceArray = [];
+    //  this.pArray = priceArray.push(this.newForm.getRawValue().price);
      this.ngRedux.dispatch({type: PRODUCT_FORM, data: this.newForm.getRawValue()});
      this.service.getProducts(this.newForm.getRawValue());
   }

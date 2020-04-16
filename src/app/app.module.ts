@@ -16,6 +16,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { environment } from '../environments/environment';
 import { CommonModule } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { CommonModule } from '@angular/common';
     NgReduxModule,
     RouterModule,
     CommonModule,
+    ChartsModule,
     StoreModule.forRoot({rootReducer}),
     !environment.production ? StoreDevtoolsModule.instrument() : []
 

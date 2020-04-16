@@ -4,16 +4,15 @@ import { BehaviorSubject } from 'rxjs';
 import { AppState } from '../main-store';
 import { EMPLOYEE_LIST, LOADING } from '../action';
 import { NgRedux } from '@angular-redux/store';
+import { ProductResultModel } from '../employee/model/ProductResult';
+import { ProductResultObj } from '../employee/model/ProductResultObj';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeServiceService {
- data: any;
-
-  // private product = new BehaviorSubject<Array<any>>([]);
-
-  //  productData = this.product.asObservable();
+ data: ProductResultObj;
+ prodLists: Array<ProductResultModel>;
   constructor(private http: HttpClient, private ngRedux: NgRedux <AppState>) { }
   read() {
     return this.http.get('http://localhost:2000/api/getAllProducts');
@@ -21,9 +20,14 @@ export class EmployeeServiceService {
   getProducts(data) {
     const params = paramsStringify(data);
     const filterUrl = 'http://localhost:2000/api/getAllProducts' + params;
-    this.http.get(filterUrl).subscribe((data) => {
-      this.data = data;
-      this.ngRedux.dispatch({type: EMPLOYEE_LIST, data: this.data});
+    this.http.get<ProductResultObj>(filterUrl).subscribe((data: ProductResultObj) => {
+      this.prodLists = data.data;
+      this.prodLists.map((product) => {
+        if (product.price == null) {
+          product.price = 40;
+        }
+      });
+      this.ngRedux.dispatch({type: EMPLOYEE_LIST, data: this.prodLists});
       this.ngRedux.dispatch({type: LOADING, data: false});
     }, err => {
       this.ngRedux.dispatch({type: LOADING, data: false});
@@ -35,7 +39,29 @@ export class EmployeeServiceService {
   //  return this.http.get('http://localhost:2000/api/getAllProducts');
   }
 }
-// export function   paramsStringify(filterObj: any) :string{
+
+export function paramsStringify(filterObj: any): string {
+  //  debugger;
+  let finalParams = '';
+  let params = {};
+  let keys = Object.keys(filterObj);
+  //  console.log(keys);
+  keys.map(k => {
+    // console.log(filterObj[k]);
+    if (filterObj[k]) {
+      // copying key value pairs into params variable
+      params = { ...params, [k]: filterObj[k] };
+    }
+  });
+  finalParams = '?';
+  keys = Object.keys(params);
+  keys.map(k => {
+    finalParams = (finalParams === '?' ? finalParams : finalParams + '&') + k + '=' + params[k].toString();
+  });
+  return finalParams;
+}
+
+  // export function   paramsStringify(filterObj: any) :string{
 
 //   let finalParams:string = '';
 //   let params = {};
@@ -82,25 +108,3 @@ export class EmployeeServiceService {
  
 //    return finalParams;
 //  }
-
-export function paramsStringify(filterObj: any): string {
-  let finalParams = '';
-  let params = {};
-  let keys = Object.keys(filterObj);
-  keys.map(k => {
-   // console.log(filterObj[k]);
-    if (filterObj[k]) {
-      params = {
-        ...params,
-        [k]: filterObj[k]
-      };
-
-    }
-  } );
-  finalParams = '?';
-  keys = Object.keys(params);
-  keys.map(k => {
-    finalParams = (finalParams === '?' ? finalParams : finalParams + '&') + k + '=' + params[k].toString();
-  });
-  return finalParams;
-  }

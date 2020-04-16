@@ -6,6 +6,8 @@ import { AppState } from '../main-store';
 import { NgRedux } from '@angular-redux/store';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ChartType } from 'chart.js';
+import { MultiDataSet, Label } from 'ng2-charts';
 
 @Component({
   selector: 'app-login',
@@ -13,13 +15,20 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  constructor(private fb: FormBuilder, private router: Router,
+              private service: CurdServiceService, private ngRedux: NgRedux<AppState>) { }
   loginForm: FormGroup;
   loginClicked: boolean;
   loggedIn: boolean;
   private subscription = new  Subscription();
-  constructor(private fb: FormBuilder, private router: Router,
-              private service: CurdServiceService, private ngRedux: NgRedux<AppState>) { }
   loginResponse: any;
+
+  // doughnutChartLabels: Label[] = ['BMW', 'Ford', 'Tesla'];
+  // doughnutChartData: MultiDataSet = [
+  //   [55, 25, 20]
+  // ];
+  // doughnutChartType: ChartType = 'doughnut';
+
   ngOnInit() {
     const sub1 = this.ngRedux.select(state => {
       return state.home.loggedIn;
