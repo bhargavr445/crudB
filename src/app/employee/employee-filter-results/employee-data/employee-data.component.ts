@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeServiceService } from '../../../employee/employee-service.service';
 import { NgRedux } from '@angular-redux/store';
 import { AppState } from '../../../main-store';
+import { ProductResultModel } from '../../model/ProductResult';
 
 @Component({
   selector: 'app-employee-data',
@@ -9,7 +10,7 @@ import { AppState } from '../../../main-store';
   styleUrls: ['./employee-data.component.css']
 })
 export class EmployeeDataComponent implements OnInit {
-  employeeRed: any;
+  employeeRed: Array<ProductResultModel>;
    data: any;
    result: Array<any>;
   constructor(private service: EmployeeServiceService, private ngRedux: NgRedux <AppState>) { }
@@ -25,7 +26,7 @@ export class EmployeeDataComponent implements OnInit {
     }).subscribe(
       (result) => {
         this.employeeRed = result;
-      //  console.log(this.employeeRed);
+        console.log(this.employeeRed);
         // console.log(this.employeeRed);
       });
   }

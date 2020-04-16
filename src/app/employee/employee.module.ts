@@ -8,6 +8,7 @@ import { EmployeeFliterComponent } from '../employee/employee-filter-results/emp
 import { EmployeeFilterResultsComponent } from '../employee/employee-filter-results/employee-filter-results.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeCreateComponent } from './employee-create/employee-create.component';
+import { BrowserModule } from '@angular/platform-browser';
 // import { BrowserModule } from '@angular/platform-browser';
 
 
@@ -24,6 +25,7 @@ import { EmployeeCreateComponent } from './employee-create/employee-create.compo
     FormsModule,
     ReactiveFormsModule,
     // BrowserModule,
+    CommonModule
   ]
 })
 export class EmployeeModule { }
