@@ -22,6 +22,8 @@ export class EmployeeServiceService {
     const filterUrl = 'http://localhost:2000/api/getAllProducts' + params;
     this.http.get<ProductResultObj>(filterUrl).subscribe((data: ProductResultObj) => {
       this.prodLists = data.data;
+      this.prodLists.push({name: 'india', price: 34, startDate: '12/10/20', endDate: '10/13/20'});
+      this.prodLists.push({name: 'john', price: 45, startDate: '12/14/20', endDate: '10/11/20'});
       this.prodLists.map((product) => {
         if (product.price == null) {
           product.price = 40;

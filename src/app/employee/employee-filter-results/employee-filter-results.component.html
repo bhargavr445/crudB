@@ -1,3 +1,14 @@
 <p>employee-filter-results works!</p>
 <app-employee-fliter></app-employee-fliter>
 <app-employee-data></app-employee-data>
+
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+        <select formControlName="name">
+          <option disabled>Select Oppo Suits</option>
+          <option>Choose oppo suit</option>
+          <option *ngFor="let type of productType">{{type}}</option>
+        </select>
+      
+        <button>Submit</button>
+      </form>

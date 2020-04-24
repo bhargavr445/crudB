@@ -5,7 +5,6 @@ export class ProductResultModel {
     startDate: any;
     endDate: any;
 
-
     constructor() {
         this.name = '';
         this.price = null;

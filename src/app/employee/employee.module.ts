@@ -9,6 +9,9 @@ import { EmployeeFilterResultsComponent } from '../employee/employee-filter-resu
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeeCreateComponent } from './employee-create/employee-create.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { RetailComponent } from './retail/retail.component';
+import { ConsumerComponent } from './consumer/consumer.component';
+// import { UpdateEmployeeRouteResolver } from './resolvers/UpdateEmployeeResolver';
 // import { BrowserModule } from '@angular/platform-browser';
 
 
@@ -19,13 +22,16 @@ import { BrowserModule } from '@angular/platform-browser';
     EmployeeComponent,
     EmployeeFilterResultsComponent,
     EmployeeCreateComponent,
+    // CusomerComponent,
+    RetailComponent,
+    ConsumerComponent,
   ],
   imports: [
+    CommonModule,
     EmployeeRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    // BrowserModule,
-    CommonModule
-  ]
+  ],
+  providers: []// UpdateEmployeeRouteResolver]
 })
 export class EmployeeModule { }

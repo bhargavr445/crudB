@@ -9,15 +9,33 @@
       <td>{{ prod.startDate }}</td>
     </tr>
   </table> -->
-   <!-- <div *ngIf="employeeRed"> -->
-    <ul>
+    <div *ngIf="employeeRed.length>0"> 
+      <input id="filter"  name="filter" type="number" [(ngModel)]="filterText">
+      <button type="submit" (click)="onKey()">Filter By Price</button>
+      <button type="reset" (click)="originalData()">Clear Filter</button>
+     <table>
+       <tr>
+         <th>Product Name</th>
+         <th>Product Price</th>
+         <th>Start Date</th>
+         <th>End Date</th>
+       </tr>
+      <tr *ngFor="let prod of employeeRed">
+        <td>{{ prod.name }}</td>  
+        <td>{{ prod.price }}</td>
+        <td>{{ prod.startDate }}</td>
+        <td>{{ prod.endDate }}</td>
+          </tr>  
+     </table>
+    </div>
+     <!-- <ul>
       <li *ngFor="let prod of employeeRed">
           {{ prod.startDate }}
           <p></p>
           {{ prod.name }}
       </li>
-    </ul>
+    </ul> -->
 <!-- 
-  </div> -->
+   -->
 
   <!-- <p>{{ employeeRed }}</p> -->
