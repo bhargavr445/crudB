@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+// tslint:disable-next-line:max-line-length
 import { HttpHandler, HTTP_INTERCEPTORS, HttpInterceptor, HttpRequest, HttpHeaderResponse, HttpSentEvent, HttpProgressEvent, HttpResponse, HttpUserEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -6,43 +7,44 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 @Injectable()
-export class AppInterceptor implements HttpInterceptor{
+export class AppInterceptor implements HttpInterceptor {
+    // tslint:disable-next-line:max-line-length
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpSentEvent | HttpHeaderResponse | HttpProgressEvent | HttpResponse<any> | HttpUserEvent<any>> {
         // throw new Error("Method not implemented.");
-        //logic
-        let token = sessionStorage.getItem('auth');
-        console.log("My request got intercepted",token);
+        // logic
+        const token = sessionStorage.getItem('auth');
+        console.log('My request got intercepted', token);
         const tokenData = 'Bearer' + token;
         console.log(req.url);
         console.log(req);
 
         console.log(tokenData);
-        const modifiedRequest= req.clone({headers: req.headers.append('Authorization' , '')});
+        const modifiedRequest = req.clone({headers: req.headers.append('Authorization' , '')});
         return next.handle(modifiedRequest).pipe(
-       
+
         map((event: any) => {
+              // tslint:disable-next-line:no-debugger
               debugger;
-                if (event instanceof HttpResponse) {
+              if (event instanceof HttpResponse) {
                     console.log('event--->>>', event);
                     // this.errorDialogService.openDialog(event);
                 }
-                return event;
+              return event;
             }),
             catchError((error: HttpErrorResponse) => {
-                if(error.status == 401) {
-                    //navigate from here
-                    //this.router.navigate('/login');
-                } 
+                if (error.status === 401) {
+                    // navigate from here
+                    // this.router.navigate('/login');
+                }
                 let data = {};
                 data = {
                     reason: error && error.error && error.error.reason ? error.error.reason : '',
                     status: error.status
                 };
-                
-                
-                //this.errorDialogService.openDialog(data);
+
+                // this.errorDialogService.openDialog(data);
                 return throwError(error);
-            }));;
+            }));
     }
 
 }

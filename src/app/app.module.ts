@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-//import { ReadComponent } from './read/read.component';
+// import { ReadComponent } from './read/read.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
@@ -28,7 +28,7 @@ import { AppInterceptor } from './app-interceptor';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [{provide:HTTP_INTERCEPTORS,useClass:AppInterceptor,multi:true}],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
